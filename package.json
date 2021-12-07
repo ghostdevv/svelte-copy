@@ -1,6 +1,15 @@
 {
   "name": "svelte-copy",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghostdevv/svelte-copy.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ghostdevv/svelte-copy/issues"
+  },
+  "author": "GHOST <ghostdevbusiness@gmail.com> (https://ghostdev.xyz)",
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
