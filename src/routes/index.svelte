@@ -15,6 +15,16 @@
         bind:value={text} />
 
     <button use:copy={text}> Click to Copy </button>
+
+    <div class="col">
+        <h1>Events</h1>
+
+        <button
+            use:copy={'Hello from alert'}
+            on:svelte-copy={(e) => alert(e.detail)}>
+            Click to cause alert on copy
+        </button>
+    </div>
 </main>
 
 <style>
