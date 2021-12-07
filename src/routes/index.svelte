@@ -14,7 +14,7 @@
         placeholder="Text to copy..."
         bind:value={text} />
 
-    <button use:copy={'Hello'}> Click to Copy </button>
+    <button use:copy={text}> Click to Copy </button>
 </main>
 
 <style>
