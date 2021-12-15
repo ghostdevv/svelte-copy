@@ -17,7 +17,7 @@ export const copy = (element: HTMLElement, text: string) => {
     element.addEventListener('click', click, true);
 
     return {
-        update: (t) => (text = t),
+        update: (t: string) => (text = t),
         destroy: () => element.removeEventListener('click', click, true),
     };
 };
