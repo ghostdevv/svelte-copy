@@ -19,7 +19,7 @@
     "@sveltejs/adapter-vercel": "next",
     "@sveltejs/kit": "next",
     "ghostsui": "^1.2.0",
-    "svelte": "^3.46.2",
+    "svelte": "^3.46.3",
     "svelte-preprocess": "^4.10.1",
     "svelte2tsx": "^0.4.14",
     "tslib": "^2.3.1",
