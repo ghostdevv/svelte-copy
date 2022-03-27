@@ -2,7 +2,7 @@ export const copy = (element: HTMLElement, text: string) => {
     const click = async () => {
         if (text)
             try {
-                await navigator.clipboard.writeText(text);
+                await copyText(text);
 
                 element.dispatchEvent(
                     new CustomEvent('svelte-copy', { detail: text }),

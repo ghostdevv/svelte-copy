@@ -1,2 +1,2 @@
 import './events.d';
-export { copy } from './copy';
+export { copy, copyText } from './copy';
