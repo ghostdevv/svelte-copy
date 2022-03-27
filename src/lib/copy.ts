@@ -1,12 +1,6 @@
 export const copyText = async (text: string): Promise<void> => {
-    if ('ClipboardItem' in window) {
-        const blob = new Blob([text], { type: 'text/plain' });
-
-        const item = new ClipboardItem({
-            [blob.type]: blob,
-        });
-
-        await navigator.clipboard.write([item]);
+    if ('clipboard' in navigator) {
+        await navigator.clipboard.writeText(text);
     } else {
         const element = document.createElement('input');
 
