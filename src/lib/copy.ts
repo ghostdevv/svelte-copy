@@ -2,6 +2,9 @@ export const copyText = async (text: string): Promise<void> => {
     if ('clipboard' in navigator) {
         await navigator.clipboard.writeText(text);
     } else {
+        /**
+         * This is the fallback deprecated way of copying text to the clipboard. Only runs if it can't find the clipboard API.
+         */
         const element = document.createElement('input');
 
         element.type = 'text';
