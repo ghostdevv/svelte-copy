@@ -3,6 +3,10 @@
     import { copy } from '$lib';
 
     let text = 'Hello World';
+
+    const error = (event) => {
+        alert(event.detail.message);
+    };
 </script>
 
 <main class="col">
@@ -14,14 +18,17 @@
         placeholder="Text to copy..."
         bind:value={text} />
 
-    <button use:copy={text}> Click to Copy </button>
+    <button use:copy={text} on:svelte-copy:error={error}>
+        Click to Copy
+    </button>
 
     <div class="col">
         <h1>Events</h1>
 
         <button
             use:copy={'Hello from alert'}
-            on:svelte-copy={(e) => alert(e.detail)}>
+            on:svelte-copy={(e) => alert(e.detail)}
+            on:svelte-copy:error={error}>
             Click to cause alert on copy
         </button>
     </div>
