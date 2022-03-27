@@ -13,7 +13,7 @@
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
-    "package": "svelte-kit package"
+    "package": "svelte-kit sync && svelte-kit package"
   },
   "devDependencies": {
     "@sveltejs/adapter-vercel": "next",
