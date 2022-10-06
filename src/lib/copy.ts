@@ -33,7 +33,7 @@ export const copyText = async (text: string): Promise<void> => {
 };
 
 export const copy = (element: HTMLElement, options: Options) => {
-    async function click() {
+    async function handle() {
         if (options.text)
             try {
                 await copyText(options.text);
@@ -54,45 +54,43 @@ export const copy = (element: HTMLElement, options: Options) => {
 
     if (Array.isArray(options.events)) {
         options.events.forEach((event) => {
-            element.addEventListener(event, click, true);
+            element.addEventListener(event, handle, true);
         });
     } else {
-        element.addEventListener(options.events, click, true);
+        element.addEventListener(options.events, handle, true);
     }
 
     return {
         update: (o: Options) => {
             options.text = o.text;
 
-            const oldEvents =
-                Array.isArray(options.events)
-                    ? options.events
-                    : [options.events];
-            const newEvents =
-                Array.isArray(o.events)
-                    ? o.events
-                    : o.events
-                    ? [o.events]
-                    : ['click'];
+            const oldEvents = Array.isArray(options.events)
+                ? options.events
+                : [options.events];
+            const newEvents = Array.isArray(o.events)
+                ? o.events
+                : o.events
+                ? [o.events]
+                : ['click'];
             const addedEvents = newEvents.filter((x) => !oldEvents.includes(x));
             const removedEvents = oldEvents.filter(
                 (x) => !newEvents.includes(x),
             );
             addedEvents.forEach((event) => {
-                element.addEventListener(event, click, true);
+                element.addEventListener(event, handle, true);
             });
             removedEvents.forEach((event) => {
-                element.removeEventListener(event, click, true);
+                element.removeEventListener(event, handle, true);
             });
             options.events = newEvents;
         },
         destroy: () => {
             if (Array.isArray(options.events)) {
                 options.events.forEach((event) => {
-                    element.removeEventListener(event, click, true);
+                    element.removeEventListener(event, handle, true);
                 });
             } else {
-                element.removeEventListener(options.events, click, true);
+                element.removeEventListener(options.events, handle, true);
             }
         },
     };
