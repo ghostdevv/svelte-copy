@@ -54,7 +54,7 @@ export const copy = (element: HTMLElement, params: Parameters | string) => {
     return {
         update: (newParams: Parameters | string) => {
             const newEvents = typeof newParams == 'string' ? ['click'] : [newParams.events].flat(1);
-            const newText = (text = typeof newParams == 'string' ? newParams : newParams.text);
+            const newText = typeof newParams == 'string' ? newParams : newParams.text;
 
             const addedEvents = newEvents.filter((x) => !events.includes(x));
             const removedEvents = events.filter((x) => !newEvents.includes(x));
