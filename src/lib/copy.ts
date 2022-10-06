@@ -1,8 +1,3 @@
-interface Parameters {
-    text: string;
-    events?: string | string[];
-}
-
 export const copyText = async (text: string): Promise<void> => {
     if ('clipboard' in navigator) {
         await navigator.clipboard.writeText(text);
@@ -32,38 +27,25 @@ export const copyText = async (text: string): Promise<void> => {
     }
 };
 
+interface Parameters {
+    text: string;
+    events?: string | string[];
+}
+
 export const copy = (element: HTMLElement, params: Parameters | string) => {
     async function handle() {
         if (text)
             try {
                 await copyText(text);
 
-                element.dispatchEvent(
-                    new CustomEvent('svelte-copy', { detail: text }),
-                );
+                element.dispatchEvent(new CustomEvent('svelte-copy', { detail: text }));
             } catch (e) {
-                element.dispatchEvent(
-                    new CustomEvent('svelte-copy:error', { detail: e }),
-                );
+                element.dispatchEvent(new CustomEvent('svelte-copy:error', { detail: e }));
             }
     }
 
-    let text: string = '';
-    let events: string[] = [];
-
-    if (typeof params === 'string') {
-        text = params;
-        events = ['click'];
-    } else if (params !== null && typeof params === 'object') {
-        text = params.text;
-        if (!params.events) {
-            events = ['click'];
-        } else if (typeof params.events === 'string') {
-            events = [params.events];
-        } else if (Array.isArray(params.events)) {
-            events = params.events;
-        }
-    }
+    let events = typeof params == 'string' ? ['click'] : [params.events].flat(1);
+    let text = typeof params == 'string' ? params : params.text;
 
     events.forEach((event) => {
         element.addEventListener(event, handle, true);
@@ -71,30 +53,22 @@ export const copy = (element: HTMLElement, params: Parameters | string) => {
 
     return {
         update: (newParams: Parameters | string) => {
-            let newEvents = [];
-            if (typeof newParams === 'string') {
-                text = newParams;
-                newEvents = ['click'];
-            } else if (newParams !== null && typeof newParams === 'object') {
-                text = newParams.text;
-                if (!newParams.events) {
-                    newEvents = ['click'];
-                } else if (typeof newParams.events === 'string') {
-                    newEvents = [newParams.events];
-                } else if (Array.isArray(newParams.events)) {
-                    newEvents = newParams.events;
-                }
-            }
+            const newEvents = typeof newParams == 'string' ? ['click'] : [newParams.events].flat(1);
+            const newText = (text = typeof newParams == 'string' ? newParams : newParams.text);
 
             const addedEvents = newEvents.filter((x) => !events.includes(x));
             const removedEvents = events.filter((x) => !newEvents.includes(x));
+
             addedEvents.forEach((event) => {
                 element.addEventListener(event, handle, true);
             });
+
             removedEvents.forEach((event) => {
                 element.removeEventListener(event, handle, true);
             });
+
             events = newEvents;
+            text = newText;
         },
         destroy: () => {
             events.forEach((event) => {
