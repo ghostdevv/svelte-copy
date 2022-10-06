@@ -1,5 +1,4 @@
 <script>
-    import 'ghostsui';
     import { copy } from '$lib';
 
     let text = 'Hello World';
