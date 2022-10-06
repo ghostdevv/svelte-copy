@@ -1,4 +1,4 @@
-interface Options {
+interface Parameters {
     text: string;
     events?: string | string[];
 }
@@ -32,14 +32,14 @@ export const copyText = async (text: string): Promise<void> => {
     }
 };
 
-export const copy = (element: HTMLElement, options: Options) => {
+export const copy = (element: HTMLElement, params: Parameters | string) => {
     async function handle() {
-        if (options.text)
+        if (text)
             try {
-                await copyText(options.text);
+                await copyText(text);
 
                 element.dispatchEvent(
-                    new CustomEvent('svelte-copy', { detail: options.text }),
+                    new CustomEvent('svelte-copy', { detail: text }),
                 );
             } catch (e) {
                 element.dispatchEvent(
@@ -48,50 +48,58 @@ export const copy = (element: HTMLElement, options: Options) => {
             }
     }
 
-    if (!options.events) {
-        options.events = 'click';
+    let text: string = '';
+    let events: string[] = [];
+
+    if (typeof params === 'string') {
+        text = params;
+        events = ['click'];
+    } else if (params !== null && typeof params === 'object') {
+        text = params.text;
+        if (!params.events) {
+            events = ['click'];
+        } else if (typeof params.events === 'string') {
+            events = [params.events];
+        } else if (Array.isArray(params.events)) {
+            events = params.events;
+        }
     }
 
-    if (Array.isArray(options.events)) {
-        options.events.forEach((event) => {
-            element.addEventListener(event, handle, true);
-        });
-    } else {
-        element.addEventListener(options.events, handle, true);
-    }
+    events.forEach((event) => {
+        element.addEventListener(event, handle, true);
+    });
 
     return {
-        update: (o: Options) => {
-            options.text = o.text;
+        update: (newParams: Parameters | string) => {
+            let newEvents = [];
+            if (typeof newParams === 'string') {
+                text = newParams;
+                newEvents = ['click'];
+            } else if (newParams !== null && typeof newParams === 'object') {
+                text = newParams.text;
+                if (!newParams.events) {
+                    newEvents = ['click'];
+                } else if (typeof newParams.events === 'string') {
+                    newEvents = [newParams.events];
+                } else if (Array.isArray(newParams.events)) {
+                    newEvents = newParams.events;
+                }
+            }
 
-            const oldEvents = Array.isArray(options.events)
-                ? options.events
-                : [options.events];
-            const newEvents = Array.isArray(o.events)
-                ? o.events
-                : o.events
-                ? [o.events]
-                : ['click'];
-            const addedEvents = newEvents.filter((x) => !oldEvents.includes(x));
-            const removedEvents = oldEvents.filter(
-                (x) => !newEvents.includes(x),
-            );
+            const addedEvents = newEvents.filter((x) => !events.includes(x));
+            const removedEvents = events.filter((x) => !newEvents.includes(x));
             addedEvents.forEach((event) => {
                 element.addEventListener(event, handle, true);
             });
             removedEvents.forEach((event) => {
                 element.removeEventListener(event, handle, true);
             });
-            options.events = newEvents;
+            events = newEvents;
         },
         destroy: () => {
-            if (Array.isArray(options.events)) {
-                options.events.forEach((event) => {
-                    element.removeEventListener(event, handle, true);
-                });
-            } else {
-                element.removeEventListener(options.events, handle, true);
-            }
+            events.forEach((event) => {
+                element.removeEventListener(event, handle, true);
+            });
         },
     };
 };
