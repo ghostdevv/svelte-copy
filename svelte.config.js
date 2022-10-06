@@ -7,11 +7,11 @@ const config = {
 
     kit: {
         adapter: vercel(),
+    },
 
-        package: {
-            exports: (file) => {
-                return file === 'index.ts';
-            },
+    package: {
+        exports: (file) => {
+            return file === 'index.ts';
         },
     },
 };
