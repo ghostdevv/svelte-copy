@@ -7,7 +7,7 @@
 	"semi": true,
 	"useTabs": false,
 	"tabWidth": 4,
-	"printWidth": 90,
+	"printWidth": 100,
 	"svelteSortOrder": "scripts-markup-styles",
 	"svelteAllowShorthand": true,
 	"svelteBracketNewLine": false,
