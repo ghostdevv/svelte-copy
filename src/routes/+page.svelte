@@ -11,15 +11,9 @@
 <main class="col">
     <label for="text">Text To Copy:</label>
 
-    <input
-        id="text"
-        type="text"
-        placeholder="Text to copy..."
-        bind:value={text} />
+    <input id="text" type="text" placeholder="Text to copy..." bind:value={text} />
 
-    <button
-        use:copy={{ text: text, events: ['click'] }}
-        on:svelte-copy:error={error}>
+    <button use:copy={{ text: text, events: ['click'] }} on:svelte-copy:error={error}>
         Click to Copy
     </button>
 
@@ -32,6 +26,12 @@
             on:svelte-copy:error={error}>
             Click to cause alert on copy
         </button>
+    </div>
+
+    <div class="col">
+        <h1>Copy on hover</h1>
+
+        <button use:copy={{ text: 'copied on hover', events: ['mouseover'] }}> Hello World </button>
     </div>
 </main>
 
