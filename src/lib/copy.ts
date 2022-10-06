@@ -1,6 +1,6 @@
 interface Options {
     text: string;
-    events: string | string[];
+    events?: string | string[];
 }
 
 export const copyText = async (text: string): Promise<void> => {
@@ -52,7 +52,7 @@ export const copy = (element: HTMLElement, options: Options) => {
         options.events = 'click';
     }
 
-    if (options.events instanceof Array) {
+    if (Array.isArray(options.events)) {
         options.events.forEach((event) => {
             element.addEventListener(event, click, true);
         });
@@ -65,11 +65,11 @@ export const copy = (element: HTMLElement, options: Options) => {
             options.text = o.text;
 
             const oldEvents =
-                options.events instanceof Array
+                Array.isArray(options.events)
                     ? options.events
                     : [options.events];
             const newEvents =
-                o.events instanceof Array
+                Array.isArray(o.events)
                     ? o.events
                     : o.events
                     ? [o.events]
@@ -87,7 +87,7 @@ export const copy = (element: HTMLElement, options: Options) => {
             options.events = newEvents;
         },
         destroy: () => {
-            if (options.events instanceof Array) {
+            if (Array.isArray(options.events)) {
                 options.events.forEach((event) => {
                     element.removeEventListener(event, click, true);
                 });
