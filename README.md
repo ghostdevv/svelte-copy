@@ -19,7 +19,7 @@ Let's make a button that when you click it copies `Hello World` to the clipboard
     import { copy } from 'svelte-copy';
 </script>
 
-<button use:copy={"Hello World"}>
+<button use:copy={{ text: 'Hello World', events: ['click'] }}>
     Click me!
 </button>
 ```
@@ -33,7 +33,7 @@ There are some custom events you can use on elements that have the copy action:
 
     ```html
     <button
-        use:copy={'Hello from alert'}
+        use:copy={{ text: 'Hello from alert', events: ['click'] }}
         on:svelte-copy={(event) => alert(event.detail)}>
         Click to cause alert on copy
     </button>
@@ -44,7 +44,7 @@ There are some custom events you can use on elements that have the copy action:
 
     ```html
     <button
-        use:copy={'Some text'}
+        use:copy={{ text: 'Some text', events: ['click'] }}
         on:svelte-copy:error="{(event) =>
             alert(`There was an error: ${event.detail.message}`)}">
         Click to cause alert on copy

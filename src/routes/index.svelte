@@ -18,7 +18,9 @@
         placeholder="Text to copy..."
         bind:value={text} />
 
-    <button use:copy={text} on:svelte-copy:error={error}>
+    <button
+        use:copy={{ text: text, events: ['click'] }}
+        on:svelte-copy:error={error}>
         Click to Copy
     </button>
 
@@ -26,7 +28,7 @@
         <h1>Events</h1>
 
         <button
-            use:copy={'Hello from alert'}
+            use:copy={{ text: 'Hello from alert', events: 'click' }}
             on:svelte-copy={(e) => alert(e.detail)}
             on:svelte-copy:error={error}>
             Click to cause alert on copy

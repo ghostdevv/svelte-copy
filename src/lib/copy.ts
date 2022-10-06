@@ -1,3 +1,8 @@
+interface Options {
+    text: string;
+    events: string | string[];
+}
+
 export const copyText = async (text: string): Promise<void> => {
     if ('clipboard' in navigator) {
         await navigator.clipboard.writeText(text);
@@ -27,14 +32,14 @@ export const copyText = async (text: string): Promise<void> => {
     }
 };
 
-export const copy = (element: HTMLElement, text: string) => {
+export const copy = (element: HTMLElement, options: Options) => {
     async function click() {
-        if (text)
+        if (options.text)
             try {
-                await copyText(text);
+                await copyText(options.text);
 
                 element.dispatchEvent(
-                    new CustomEvent('svelte-copy', { detail: text }),
+                    new CustomEvent('svelte-copy', { detail: options.text }),
                 );
             } catch (e) {
                 element.dispatchEvent(
@@ -43,10 +48,52 @@ export const copy = (element: HTMLElement, text: string) => {
             }
     }
 
-    element.addEventListener('click', click, true);
+    if (!options.events) {
+        options.events = 'click';
+    }
+
+    if (options.events instanceof Array) {
+        options.events.forEach((event) => {
+            element.addEventListener(event, click, true);
+        });
+    } else {
+        element.addEventListener(options.events, click, true);
+    }
 
     return {
-        update: (t: string) => (text = t),
-        destroy: () => element.removeEventListener('click', click, true),
+        update: (o: Options) => {
+            options.text = o.text;
+
+            const oldEvents =
+                options.events instanceof Array
+                    ? options.events
+                    : [options.events];
+            const newEvents =
+                o.events instanceof Array
+                    ? o.events
+                    : o.events
+                    ? [o.events]
+                    : ['click'];
+            const addedEvents = newEvents.filter((x) => !oldEvents.includes(x));
+            const removedEvents = oldEvents.filter(
+                (x) => !newEvents.includes(x),
+            );
+            addedEvents.forEach((event) => {
+                element.addEventListener(event, click, true);
+            });
+            removedEvents.forEach((event) => {
+                element.removeEventListener(event, click, true);
+            });
+            options.events = newEvents;
+        },
+        destroy: () => {
+            if (options.events instanceof Array) {
+                options.events.forEach((event) => {
+                    element.removeEventListener(event, click, true);
+                });
+            } else {
+                element.removeEventListener(options.events, click, true);
+            }
+        },
     };
 };
