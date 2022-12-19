@@ -33,14 +33,14 @@ interface Parameters {
 
 export const copy = (element: HTMLElement, params: Parameters | string) => {
     async function handle() {
-        if (text)
+        if (text) {
             try {
-                await copyText(text);
-
+                await copyText(text, fallback);
                 element.dispatchEvent(new CustomEvent('svelte-copy', { detail: text }));
             } catch (e) {
                 element.dispatchEvent(new CustomEvent('svelte-copy:error', { detail: e }));
             }
+        }
     }
 
     let events = typeof params == 'string' ? ['click'] : [params.events].flat(1);
