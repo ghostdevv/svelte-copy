@@ -2,4 +2,12 @@
     import 'ghostsui';
 </script>
 
-<slot />
+<main>
+    <slot />
+</main>
+
+<style>
+    main {
+        padding: 32px;
+    }
+</style>

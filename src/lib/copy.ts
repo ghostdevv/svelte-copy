@@ -2,7 +2,6 @@ function legacyCopyText(text: string) {
     const element = document.createElement('input');
 
     element.type = 'text';
-    element.disabled = true;
 
     element.style.setProperty('position', 'fixed');
     element.style.setProperty('z-index', '-100');
@@ -20,16 +19,32 @@ function legacyCopyText(text: string) {
     document.body.removeChild(element);
 }
 
-export const copyText = async (text: string): Promise<void> => {
-    // if ('clipboard' in navigator) {
-    //     await navigator.clipboard.writeText(text);
-    // } else {
-    legacyCopyText(text);
-    // }
+export const copyText = async (text: string, fallback: boolean): Promise<void> => {
+    if ('clipboard' in navigator) {
+        try {
+            await navigator.clipboard.writeText(text);
+        } catch (error) {
+            if (fallback) {
+                legacyCopyText(text);
+            } else {
+                throw error;
+            }
+        }
+    } else {
+        legacyCopyText(text);
+    }
 };
 
 interface Parameters {
     text: string;
+    /**
+     * @default false
+     */
+    fallback?: boolean;
+
+    /**
+     * @default click
+     */
     events?: string | string[];
 }
 
@@ -37,7 +52,7 @@ export const copy = (element: HTMLElement, params: Parameters | string) => {
     async function handle() {
         if (text)
             try {
-                await copyText(text);
+                await copyText(text, fallback);
 
                 element.dispatchEvent(new CustomEvent('svelte-copy', { detail: text }));
             } catch (e) {
@@ -46,6 +61,7 @@ export const copy = (element: HTMLElement, params: Parameters | string) => {
     }
 
     let events = typeof params == 'string' ? ['click'] : [params.events].flat(1);
+    let fallback = typeof params == 'string' ? false : params.fallback;
     let text = typeof params == 'string' ? params : params.text;
 
     events.forEach((event) => {
@@ -55,6 +71,7 @@ export const copy = (element: HTMLElement, params: Parameters | string) => {
     return {
         update: (newParams: Parameters | string) => {
             const newEvents = typeof newParams == 'string' ? ['click'] : [newParams.events].flat(1);
+            const newFallback = typeof newParams == 'string' ? false : newParams.fallback;
             const newText = typeof newParams == 'string' ? newParams : newParams.text;
 
             const addedEvents = newEvents.filter((x) => !events.includes(x));
@@ -68,6 +85,7 @@ export const copy = (element: HTMLElement, params: Parameters | string) => {
                 element.removeEventListener(event, handle, true);
             });
 
+            fallback = newFallback;
             events = newEvents;
             text = newText;
         },
