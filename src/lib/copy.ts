@@ -8,7 +8,6 @@ export const copyText = async (text: string): Promise<void> => {
         const element = document.createElement('input');
 
         element.type = 'text';
-        element.disabled = true;
 
         element.style.setProperty('position', 'fixed');
         element.style.setProperty('z-index', '-100');
