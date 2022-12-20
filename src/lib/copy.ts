@@ -19,24 +19,25 @@ function legacyCopyText(text: string) {
     document.body.removeChild(element);
 }
 
-export const copyText = async (text: string, fallback: boolean): Promise<void> => {
-    if ('clipboard' in navigator) {
-        try {
+export const copyText = async (text: string, fallback?: boolean): Promise<void> => {
+    try {
+        if ('clipboard' in navigator) {
             await navigator.clipboard.writeText(text);
-        } catch (error) {
-            if (fallback) {
-                legacyCopyText(text);
-            } else {
-                throw error;
-            }
+        } else {
+            legacyCopyText(text);
         }
-    } else {
-        legacyCopyText(text);
+    } catch (error) {
+        if (fallback) {
+            legacyCopyText(text);
+        } else {
+            throw error;
+        }
     }
 };
 
 interface Parameters {
     text: string;
+
     /**
      * @default false
      */
@@ -50,14 +51,14 @@ interface Parameters {
 
 export const copy = (element: HTMLElement, params: Parameters | string) => {
     async function handle() {
-        if (text)
+        if (text) {
             try {
                 await copyText(text, fallback);
-
                 element.dispatchEvent(new CustomEvent('svelte-copy', { detail: text }));
             } catch (e) {
                 element.dispatchEvent(new CustomEvent('svelte-copy:error', { detail: e }));
             }
+        }
     }
 
     let events = typeof params == 'string' ? ['click'] : [params.events].flat(1);
