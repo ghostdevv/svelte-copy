@@ -1,33 +1,51 @@
-export const copyText = async (text: string): Promise<void> => {
-    if ('clipboard' in navigator) {
-        await navigator.clipboard.writeText(text);
-    } else {
-        /**
-         * This is the fallback deprecated way of copying text to the clipboard. Only runs if it can't find the clipboard API.
-         */
-        const element = document.createElement('input');
+function legacyCopyText(text: string) {
+    const element = document.createElement('input');
 
-        element.type = 'text';
+    element.type = 'text';
 
-        element.style.setProperty('position', 'fixed');
-        element.style.setProperty('z-index', '-100');
-        element.style.setProperty('pointer-events', 'none');
-        element.style.setProperty('opacity', '0');
+    element.style.setProperty('position', 'fixed');
+    element.style.setProperty('z-index', '-100');
+    element.style.setProperty('pointer-events', 'none');
+    element.style.setProperty('opacity', '0');
 
-        element.value = text;
+    element.value = text;
 
-        document.body.appendChild(element);
+    document.body.appendChild(element);
 
-        element.click();
-        element.select();
-        document.execCommand('copy');
+    element.click();
+    element.select();
+    document.execCommand('copy');
 
-        document.body.removeChild(element);
+    document.body.removeChild(element);
+}
+
+export const copyText = async (text: string, fallback?: boolean): Promise<void> => {
+    try {
+        if ('clipboard' in navigator) {
+            await navigator.clipboard.writeText(text);
+        } else {
+            legacyCopyText(text);
+        }
+    } catch (error) {
+        if (fallback) {
+            legacyCopyText(text);
+        } else {
+            throw error;
+        }
     }
 };
 
 interface Parameters {
     text: string;
+
+    /**
+     * @default false
+     */
+    fallback?: boolean;
+
+    /**
+     * @default "click"
+     */
     events?: string | string[];
 }
 
@@ -44,6 +62,7 @@ export const copy = (element: HTMLElement, params: Parameters | string) => {
     }
 
     let events = typeof params == 'string' ? ['click'] : [params.events].flat(1);
+    let fallback = typeof params == 'string' ? false : params.fallback;
     let text = typeof params == 'string' ? params : params.text;
 
     events.forEach((event) => {
@@ -53,6 +72,7 @@ export const copy = (element: HTMLElement, params: Parameters | string) => {
     return {
         update: (newParams: Parameters | string) => {
             const newEvents = typeof newParams == 'string' ? ['click'] : [newParams.events].flat(1);
+            const newFallback = typeof newParams == 'string' ? false : newParams.fallback;
             const newText = typeof newParams == 'string' ? newParams : newParams.text;
 
             const addedEvents = newEvents.filter((x) => !events.includes(x));
@@ -66,6 +86,7 @@ export const copy = (element: HTMLElement, params: Parameters | string) => {
                 element.removeEventListener(event, handle, true);
             });
 
+            fallback = newFallback;
             events = newEvents;
             text = newText;
         },
