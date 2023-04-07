@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@sveltejs/adapter-vercel": "1.0.0-next.77",
-    "@sveltejs/kit": "1.0.0-next.510",
+    "@sveltejs/kit": "1.15.2",
     "@sveltejs/package": "^1.0.0-next.5",
     "ghostsui": "^1.5.0",
     "svelte": "^3.50.1",
