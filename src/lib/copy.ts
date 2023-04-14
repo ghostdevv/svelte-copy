@@ -1,3 +1,5 @@
+import type { Action } from 'svelte/action';
+
 export const copyText = async (text: string): Promise<void> => {
     if ('clipboard' in navigator) {
         await navigator.clipboard.writeText(text);
@@ -32,7 +34,12 @@ interface Parameters {
     events?: string | string[];
 }
 
-export const copy = (element: HTMLElement, params: Parameters | string) => {
+interface Attributes {
+    'on:svelte-copy': (event: CustomEvent<string>) => void;
+    'on:svelte-copy:error': (event: CustomEvent<Error>) => void;
+}
+
+export const copy: Action<HTMLElement, Parameters | string, Attributes> = (element, params) => {
     async function handle() {
         if (text)
             try {
