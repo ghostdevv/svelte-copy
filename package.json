@@ -28,6 +28,8 @@
     "vite": "^4.2.1"
   },
   "type": "module",
+  "types": "./dist/index.d.ts",
+  "svelte": "./dist/index.js",
   "exports": {
     "./package.json": "./package.json",
     ".": {
