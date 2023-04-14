@@ -63,6 +63,20 @@ By default, copy action is fired on click event. You can change this behavior by
 </button>
 ```
 
+# Copy Text
+
+We also include a helper called `copyText` if you want to use the logic of this package without the action. Make sure you only call this in the browser!
+
+```html
+<script>
+    import { copyText } from 'svelte-copy'l
+</script>
+
+<button on:click={() => copyText('Hello World!')}>
+    Copy something
+</button>
+```
+
 # Support
 
 -   Join the [discord](https://discord.gg/2Vd4wAjJnm)<br>
