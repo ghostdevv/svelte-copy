@@ -1,4 +1,4 @@
-name: Publish
+name: Release Package
 
 on:
   release:
@@ -8,13 +8,29 @@ jobs:
   publish-npm:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node 16
+        uses: actions/setup-node@v1
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
-      - run: npm ci
-      - run: npm run package
-      - run: cd package && npm publish
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2.0.1
+        with:
+            version: 8.0.0
+
+      - name: Install
+        run: pnpm install
+
+      - name: Build
+        run: pnpm run package
+
+      - name: Publish
+        run: |
+          pnpm config set "//registry.npmjs.org/:_authToken" "${NPM_TOKEN}"
+          pnpm publish --no-git-checks
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
