@@ -1,6 +1,6 @@
 import type { Action } from 'svelte/action';
 
-export const copyText = async (text: string): Promise<void> => {
+export async function copyText(text: string) {
     if ('clipboard' in navigator) {
         await navigator.clipboard.writeText(text);
     } else {
@@ -27,7 +27,7 @@ export const copyText = async (text: string): Promise<void> => {
 
         document.body.removeChild(element);
     }
-};
+}
 
 interface Parameters {
     text: string;
