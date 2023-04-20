@@ -69,7 +69,7 @@ We also include a helper called `copyText` if you want to use the logic of this 
 
 ```html
 <script>
-    import { copyText } from 'svelte-copy'l
+    import { copyText } from 'svelte-copy';
 </script>
 
 <button on:click={() => copyText('Hello World!')}>
