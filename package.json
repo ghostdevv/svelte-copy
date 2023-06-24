@@ -21,7 +21,6 @@
     "@sveltejs/package": "^2.1.0",
     "ghostsui": "^1.6.0",
     "svelte": "^4.0.0",
-    "svelte-preprocess": "^5.0.4",
     "svelte2tsx": "^0.6.16",
     "tslib": "^2.5.3",
     "typescript": "^5.1.3",
