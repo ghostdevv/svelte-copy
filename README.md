@@ -1,5 +1,7 @@
 # Svelte Copy
 
+Works with Svelte 3 & 4!
+
 Ever wanted to copy something to clipboard? Say hello to Svelte Copy ✨
 
 [**Demo**](https://svelte-copy.vercel.app/)
