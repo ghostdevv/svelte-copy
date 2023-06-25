@@ -27,7 +27,7 @@
     "vite": "^4.3.9"
   },
   "peerDependencies": {
-    "svelte": "^3.58.0 || ^4.0.0"
+    "svelte": "^3.55.0 || ^4.0.0"
   },
   "type": "module",
   "types": "./dist/index.d.ts",
