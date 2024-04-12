@@ -1,15 +1,10 @@
 {
-	"singleQuote": true,
-	"quoteProps": "as-needed",
-	"trailingComma": "all",
-	"bracketSpacing": true,
-	"arrowParens": "always",
-	"semi": true,
-	"useTabs": false,
-	"tabWidth": 4,
-	"printWidth": 100,
-	"svelteSortOrder": "scripts-markup-styles",
-	"svelteAllowShorthand": true,
-	"svelteBracketNewLine": false,
-	"svelteIndentScriptAndStyle": true
+    "singleQuote": true,
+    "quoteProps": "as-needed",
+    "trailingComma": "all",
+    "bracketSpacing": true,
+    "arrowParens": "always",
+    "semi": true,
+    "useTabs": true,
+    "tabWidth": 4
 }

@@ -1,42 +1,53 @@
 <script>
-    import { copy } from '$lib';
+	import { copy } from '$lib';
 
-    let text = 'Hello World';
+	let text = 'Hello World';
 
-    const error = (event) => {
-        alert(event.detail.message);
-    };
+	const error = (event) => {
+		alert(event.detail.message);
+	};
 </script>
 
 <main class="col">
-    <label for="text">Text To Copy:</label>
+	<label for="text">Text To Copy:</label>
 
-    <input id="text" type="text" placeholder="Text to copy..." bind:value={text} />
+	<input
+		id="text"
+		type="text"
+		placeholder="Text to copy..."
+		bind:value={text}
+	/>
 
-    <button use:copy={{ text: text, events: ['click'] }} on:svelte-copy:error={error}>
-        Click to Copy
-    </button>
+	<button
+		use:copy={{ text: text, events: ['click'] }}
+		on:svelte-copy:error={error}
+	>
+		Click to Copy
+	</button>
 
-    <div class="col">
-        <h1>Events</h1>
+	<div class="col">
+		<h1>Events</h1>
 
-        <button
-            use:copy={{ text: 'Hello from alert', events: 'click' }}
-            on:svelte-copy={(e) => alert(e.detail)}
-            on:svelte-copy:error={error}>
-            Click to cause alert on copy
-        </button>
-    </div>
+		<button
+			use:copy={{ text: 'Hello from alert', events: 'click' }}
+			on:svelte-copy={(e) => alert(e.detail)}
+			on:svelte-copy:error={error}
+		>
+			Click to cause alert on copy
+		</button>
+	</div>
 
-    <div class="col">
-        <h1>Copy on hover</h1>
+	<div class="col">
+		<h1>Copy on hover</h1>
 
-        <button use:copy={{ text: 'copied on hover', events: ['mouseover'] }}> Hello World </button>
-    </div>
+		<button use:copy={{ text: 'copied on hover', events: ['mouseover'] }}>
+			Hello World
+		</button>
+	</div>
 </main>
 
 <style>
-    main {
-        padding: 32px 12px;
-    }
+	main {
+		padding: 32px 12px;
+	}
 </style>
