@@ -13,7 +13,7 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "package": "svelte-kit sync && svelte-package"
+    "package": "svelte-kit sync && svelte-package && publint"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^3.0.1",
@@ -21,6 +21,7 @@
     "@sveltejs/package": "^2.3.1",
     "@sveltejs/vite-plugin-svelte": "^3.1.0",
     "ghostsui": "^1.6.0",
+    "publint": "^0.2.7",
     "svelte": "^4.2.14",
     "svelte2tsx": "^0.7.6",
     "tslib": "^2.6.2",
