@@ -25,7 +25,7 @@
     "publint": "^0.2.7",
     "sass": "^1.75.0",
     "shikiji": "^0.10.2",
-    "svelte": "^4.2.14",
+    "svelte": "^4.2.19",
     "svelte2tsx": "^0.7.6",
     "tslib": "^2.6.2",
     "typescript": "^5.4.5",
