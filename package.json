@@ -16,20 +16,20 @@
     "package": "svelte-kit sync && svelte-package && publint"
   },
   "devDependencies": {
-    "@sveltejs/adapter-static": "^3.0.1",
-    "@sveltejs/kit": "2.5.5",
-    "@sveltejs/package": "^2.3.1",
-    "@sveltejs/vite-plugin-svelte": "^3.1.0",
+    "@sveltejs/adapter-static": "^3.0.5",
+    "@sveltejs/kit": "2.7.2",
+    "@sveltejs/package": "^2.3.5",
+    "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "dedent": "^1.5.3",
     "ghostsui": "^1.6.0",
-    "publint": "^0.2.7",
-    "sass": "^1.75.0",
+    "publint": "^0.2.11",
+    "sass": "^1.80.3",
     "shikiji": "^0.10.2",
-    "svelte": "^4.2.14",
-    "svelte2tsx": "^0.7.6",
-    "tslib": "^2.6.2",
-    "typescript": "^5.4.5",
-    "vite": "^5.2.8"
+    "svelte": "^5.0.2",
+    "svelte2tsx": "^0.7.22",
+    "tslib": "^2.8.0",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.9"
   },
   "peerDependencies": {
     "svelte": "^3.55.0 || ^4.0.0"
