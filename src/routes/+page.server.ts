@@ -1,4 +1,4 @@
-import { codeToHtml } from 'shikiji';
+import { codeToHtml } from 'shiki';
 import dedent from 'dedent';
 
 async function highlight(code: string) {
