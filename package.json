@@ -24,6 +24,8 @@
     "dedent": "^1.5.3",
     "ghostsui": "^1.6.0",
     "happy-dom": "^15.7.4",
+    "prettier": "^3.3.3",
+    "prettier-plugin-svelte": "^3.2.7",
     "publint": "^0.2.11",
     "sass": "^1.80.3",
     "shiki": "^1.22.0",
