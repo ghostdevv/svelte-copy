@@ -23,7 +23,7 @@ jobs:
                   version: 9.12.2
 
             - name: Install
-              run: pnpm install
+              run: pnpm install --frozen-lockfile
 
             - name: Package
               run: pnpm package
