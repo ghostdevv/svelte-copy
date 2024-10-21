@@ -79,6 +79,42 @@ describe('copy action', () => {
 		expect(onCopy).toHaveBeenCalledWith(expect.objectContaining({ text }));
 	});
 
+	it('calls the onCopy callback with the click event', async () => {
+		const element = document.createElement('button');
+		const text = crypto.randomUUID();
+		const onCopy = vi.fn();
+
+		copyAction(element, { text, onCopy, events: ['pointerover'] });
+
+		element.dispatchEvent(new PointerEvent('pointerover'));
+		expect(await navigator.clipboard.readText()).toBe(text);
+		expect(onCopy).toHaveBeenCalledOnce();
+		expect(onCopy).toHaveBeenCalledWith(
+			expect.objectContaining({
+				text,
+				event: expect.objectContaining({ type: 'pointerover' }),
+			}),
+		);
+	});
+
+	it('calls the onCopy callback with a custom event', async () => {
+		const element = document.createElement('button');
+		const text = crypto.randomUUID();
+		const onCopy = vi.fn();
+
+		copyAction(element, { text, onCopy });
+
+		element.click();
+		expect(await navigator.clipboard.readText()).toBe(text);
+		expect(onCopy).toHaveBeenCalledOnce();
+		expect(onCopy).toHaveBeenCalledWith(
+			expect.objectContaining({
+				text,
+				event: expect.objectContaining({ type: 'click' }),
+			}),
+		);
+	});
+
 	it('sets updated text correctly with string option', async () => {
 		const element = document.createElement('button');
 		const originalText = crypto.randomUUID();
