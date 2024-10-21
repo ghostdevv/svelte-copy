@@ -38,7 +38,7 @@ You can expand that with an options object:
         onCopy({ text, event }) {
             alert(`Text copied: "${text}". Triggered by "${event}"`);
         },
-        onError(error) {
+        onError({ error, event }) {
             alert(error.message)
         }
     }}

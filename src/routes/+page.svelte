@@ -79,7 +79,7 @@
 					onCopy() {
 						throw new Error("let's pretend it broke");
 					},
-					onError(error) {
+					onError({ error }) {
 						alert(error.message);
 					},
 				}}>
@@ -102,7 +102,7 @@
 							`The text "${text}" was copied because of the "${event.type}" event`,
 						);
 					},
-					onError(error) {
+					onError({ error }) {
 						alert(error.message);
 					},
 				}}>

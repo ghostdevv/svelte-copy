@@ -12,7 +12,19 @@ export interface CopyCallbackParams {
 
 export type CopyCallback = (params: CopyCallbackParams) => void;
 
-export type ErrorCallback = (error: Error) => void;
+export interface ErrorCallbackParams {
+	/**
+	 * The error that was thrown
+	 */
+	error: Error;
+
+	/**
+	 * The event that triggered the copy, and subsequent error
+	 */
+	event: Event;
+}
+
+export type ErrorCallback = (params: ErrorCallbackParams) => void;
 
 export interface Options {
 	/**

@@ -86,7 +86,7 @@ export const copy: Action<Element, string | Options> = (
 				cause: e,
 			});
 
-			options.onError?.(error);
+			options.onError?.({ error, event });
 		}
 	};
 

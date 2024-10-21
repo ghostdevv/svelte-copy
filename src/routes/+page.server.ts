@@ -49,7 +49,7 @@ export async function load() {
                 <button
                     use:copy={{
                         text: '__text__',
-                        onError(error) {
+                        onError({ error }) {
                             alert(error.message);
                         },
                     }}
@@ -65,7 +65,7 @@ export async function load() {
                         onCopy({ text, event }) {
                             alert(\`The text "\${text}" was copied because of the "\${event.type}" event\`);
                         },
-                        onError(error) {
+                        onError({ error }) {
                             alert(error.message);
                         },
                     }}
