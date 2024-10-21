@@ -79,7 +79,7 @@ export async function load() {
                     import { Debounced } from 'runed';
 
                     let text = $state('');
-                    const debounced = new Debounced(() => text, 1000);
+                    const debounced = new Debounced(() => text);
 
                     $effect(() => {
                         if (debounced.current) {
