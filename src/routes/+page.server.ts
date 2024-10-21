@@ -12,6 +12,10 @@ export async function load() {
 	return {
 		examples: {
 			simple: await highlight(dedent`
+                <script>
+                    import { copy } from 'svelte-copy';
+                </script>
+
                 <button use:copy={'__text__'}>
                     Copy
                 </button>
