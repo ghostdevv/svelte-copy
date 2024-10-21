@@ -46,6 +46,21 @@ function removeListeners(element: Element, cb: () => void, events = ['click']) {
 	}
 }
 
+/**
+ * A svelte action to copy text to clipboard.
+ *
+ * @see https://svelte-copy.willow.codes
+ *
+ * @example
+ *
+ * <script>
+ *     import { copy } from 'svelte-copy';
+ * </script>
+ *
+ * <button use:copy={'Hello World'}>
+ *     Click me!
+ * </button>
+ */
 export const copy: Action<Element, string | Options> = (
 	element: Element,
 	initialOptions: string | Options,

@@ -1,13 +1,13 @@
-export interface CopyEventParams {
+export interface CopyCallbackParams {
 	/**
 	 * The text that was copied to clipboard
 	 */
 	text: string;
 }
 
-export type CopyCallback = (params: CopyEventParams) => void;
+export type CopyCallback = (params: CopyCallbackParams) => void;
 
-export type ErrorCallback = (params: Error) => void;
+export type ErrorCallback = (error: Error) => void;
 
 export interface Options {
 	/**
@@ -27,7 +27,7 @@ export interface Options {
 	onCopy?: CopyCallback;
 
 	/**
-	 * This callback fires when an error occurs when copying
+	 * This callback fires when an error occurs with copying
 	 */
 	onError?: ErrorCallback;
 }
