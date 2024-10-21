@@ -9,7 +9,7 @@
   "bugs": {
     "url": "https://github.com/ghostdevv/svelte-copy/issues"
   },
-  "author": "GHOST <ghostdevbusiness@gmail.com> (https://ghostdev.xyz)",
+  "author": "Willow GHOST <ghostdevbusiness@gmail.com> (https://ghostdev.xyz)",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
