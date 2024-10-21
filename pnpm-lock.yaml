@@ -24,8 +24,8 @@ importers:
         specifier: ^1.5.3
         version: 1.5.3
       ghostsui:
-        specifier: ^1.6.0
-        version: 1.6.0
+        specifier: 2.0.0-beta.1
+        version: 2.0.0-beta.1
       happy-dom:
         specifier: ^15.7.4
         version: 15.7.4
@@ -38,6 +38,9 @@ importers:
       publint:
         specifier: ^0.2.11
         version: 0.2.11
+      runed:
+        specifier: ^0.15.3
+        version: 0.15.3(svelte@5.0.2)
       sass:
         specifier: ^1.80.3
         version: 1.80.3
@@ -620,8 +623,8 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
 
-  ghostsui@1.6.0:
-    resolution: {integrity: sha512-gXg1akgRnWEmbDCbEN+5q8laXJOJdP8RqqKhpPaxk3ql0U2LEF5bfBr3wQ59LbdwdwpSK9WspOJ5Crgq2Ploow==}
+  ghostsui@2.0.0-beta.1:
+    resolution: {integrity: sha512-T11BXPTNbrje4PS3hDIAAsdMW5yfxqfS43C7d1uwpMSi80HmzyBqbH4gLWzrweAFbEu90QDirLQLbnzyG6txUg==}
 
   glob@8.1.0:
     resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}
@@ -633,9 +636,6 @@ packages:
 
   globrex@0.1.2:
     resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
-
-  greset@2.0.0:
-    resolution: {integrity: sha512-oC3JpE4RUT3iMkkmu5uzWc0H8prJAN3Nv7kcxPlJUtWBQi16UpPm6dxseIeC+KKlevxoSBzuTQeFi71qAjWHxA==}
 
   happy-dom@15.7.4:
     resolution: {integrity: sha512-r1vadDYGMtsHAAsqhDuk4IpPvr6N8MGKy5ntBo7tSdim+pWDxus2PNqOcOt8LuDZ4t3KJHE+gCuzupcx/GKnyQ==}
@@ -782,9 +782,6 @@ packages:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
 
-  postcss-value-parser@4.2.0:
-    resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
-
   postcss@8.4.47:
     resolution: {integrity: sha512-56rxCq7G/XfB4EkXq9Egn5GCqugWvDFjafDOThIdMBsI15iqPqR5r15TfSr1YPYeEI19YeaXMCbY6u88Y76GLQ==}
     engines: {node: ^10 || ^12 || >=14}
@@ -815,21 +812,19 @@ packages:
   regex@4.3.3:
     resolution: {integrity: sha512-r/AadFO7owAq1QJVeZ/nq9jNS1vyZt+6t1p/E59B56Rn2GCya+gr1KSyOzNL/er+r+B7phv5jG2xU2Nz1YkmJg==}
 
-  rfs@9.0.6:
-    resolution: {integrity: sha512-KQ0EGVP4l3B3ynUZ1UNX3UoRAeswiX+ljGRcT+MoJKXRwXSUFpVZIPsqurH9pmY/AOGBFq7KKBq9fhRCkkg+SQ==}
-    engines: {node: '>=8'}
-
   rollup@4.24.0:
     resolution: {integrity: sha512-DOmrlGSXNk1DM0ljiQA+i+o0rSLhtii1je5wgk60j49d1jHT5YYttBv1iWOnYSTG+fZZESUOSNiAl89SIet+Cg==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
+  runed@0.15.3:
+    resolution: {integrity: sha512-HtayB+loDcGdqJDHW8JFdsZzGQMyVzim6+s3052MkjZnwmwDstmF+cusMeTssBe6TCdt5i9D/Tb+KYXN3L0kXA==}
+    peerDependencies:
+      svelte: ^5.0.0-next.1
+
   sade@1.8.1:
     resolution: {integrity: sha512-xal3CZX1Xlo/k4ApwCFrHVACi9fBqJ7V+mwhBsuf/1IOKbBy098Fex+Wa/5QMubw09pSZ/u8EY8PWgevJsXp1A==}
     engines: {node: '>=6'}
-
-  sass-hex-rgb@1.0.1:
-    resolution: {integrity: sha512-yxHIGddIE+HPvS86Y2imuu/J4LZmss0K9/Dpos38gAC21ThbZLwE4PeA/2mN3ZLH3gXhHxBtjxf6Oi1GAIrMag==}
 
   sass@1.80.3:
     resolution: {integrity: sha512-ptDWyVmDMVielpz/oWy3YP3nfs7LpJTHIJZboMVs8GEC9eUmtZTZhMHlTW98wY4aEorDfjN38+Wr/XjskFWcfA==}
@@ -1487,10 +1482,7 @@ snapshots:
   fsevents@2.3.3:
     optional: true
 
-  ghostsui@1.6.0:
-    dependencies:
-      greset: 2.0.0
-      sass-hex-rgb: 1.0.1
+  ghostsui@2.0.0-beta.1: {}
 
   glob@8.1.0:
     dependencies:
@@ -1503,10 +1495,6 @@ snapshots:
   globalyzer@0.1.0: {}
 
   globrex@0.1.2: {}
-
-  greset@2.0.0:
-    dependencies:
-      rfs: 9.0.6
 
   happy-dom@15.7.4:
     dependencies:
@@ -1662,8 +1650,6 @@ snapshots:
 
   picomatch@2.3.1: {}
 
-  postcss-value-parser@4.2.0: {}
-
   postcss@8.4.47:
     dependencies:
       nanoid: 3.3.7
@@ -1689,10 +1675,6 @@ snapshots:
 
   regex@4.3.3: {}
 
-  rfs@9.0.6:
-    dependencies:
-      postcss-value-parser: 4.2.0
-
   rollup@4.24.0:
     dependencies:
       '@types/estree': 1.0.6
@@ -1715,11 +1697,14 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.24.0
       fsevents: 2.3.3
 
+  runed@0.15.3(svelte@5.0.2):
+    dependencies:
+      esm-env: 1.0.0
+      svelte: 5.0.2
+
   sade@1.8.1:
     dependencies:
       mri: 1.2.0
-
-  sass-hex-rgb@1.0.1: {}
 
   sass@1.80.3:
     dependencies:

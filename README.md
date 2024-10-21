@@ -1,10 +1,6 @@
 # Svelte Copy
 
-Works with Svelte 3 & 4!
-
-Ever wanted to copy something to clipboard? Say hello to Svelte Copy ✨
-
-[**Demo**](https://svelte-copy.pages.dev)
+A svelte action to copy text to clipboard. It uses the `navigator.clipboard` api, with a fallback to the legacy method.
 
 # Installing
 
@@ -12,11 +8,13 @@ Ever wanted to copy something to clipboard? Say hello to Svelte Copy ✨
 npm install svelte-copy -D
 ```
 
-# Using
+This library only works with Svelte 5, checkout [svelte-copy@1](https://www.npmjs.com/package/svelte-copy/v/1.4.2) for Svelte 3/4 support.
 
-Let's make a button that when you click it copies `Hello World` to the clipboard:
+# Usage
 
-```html
+The simplest use is to just pass the text you want to copy:
+
+```svelte
 <script>
     import { copy } from 'svelte-copy';
 </script>
@@ -26,58 +24,37 @@ Let's make a button that when you click it copies `Hello World` to the clipboard
 </button>
 ```
 
-# Events
+You can expand that with an options object:
 
-There are some custom events you can use on elements that have the copy action:
-
--   `on:svelte-copy`
-    This will fire when text is copied, you have access to the copied text if needed with `event.detail`:
-
-    ```html
-    <button
-        use:copy={'Hello from alert'}
-        on:svelte-copy={(event) => alert(event.detail)}>
-        Click to cause alert on copy
-    </button>
-    ```
-
--   `on:svelte-copy:error`
-    This event will fire if there is an error in copying to clipboard, you have access to the error with `event.detail`:
-
-    ```html
-    <button
-        use:copy={'Some text'}
-        on:svelte-copy:error="{(event) =>
-            alert(`There was an error: ${event.detail.message}`)}">
-        Click to cause alert on copy
-    </button>
-    ```
-
-# Custom Triggers
-
-By default, copy action is fired on click event. You can change this behavior by passing an object with the name or names of the events that you want to trigger the copy action.
-
-```html
-<button
-    use:copy={{ text: 'Hello' , events: ['touchstart', 'mouseenter']}}
-    on:svelte-copy={(event) => alert(event.detail)}>
-    Move cursor over button or touch button to cause alert on copy
-</button>
-```
-
-# Copy Text
-
-We also include a helper called `copyText` if you want to use the logic of this package without the action. Make sure you only call this in the browser!
-
-```html
+```svelte
 <script>
-    import { copyText } from 'svelte-copy';
+    import { copy } from 'svelte-copy';
 </script>
 
-<button on:click={() => copyText('Hello World!')}>
-    Copy something
+<button
+    use:copy={{
+        text,
+        events: ['click'],
+        onCopy({ text, event }) {
+            alert(`Text copied: "${text}". Triggered by "${event}"`);
+        },
+        onError(error) {
+            alert(error.message)
+        }
+    }}
+>
+    Copy
 </button>
 ```
+
+[Read the full docs here](https://svelte-copy.willow.codes).
+
+# Migrating from v1 to v2
+
+- The `on:svelte-copy` event is now a `onCopy` param to the action options.
+- The `on:svelte-copy:error` event is now a `onError` param to the action options.
+- The `events` option now only accepts `string[]`, rather than `string | string[]`
+- Svelte 5 is now required
 
 # Support
 

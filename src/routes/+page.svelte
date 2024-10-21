@@ -1,76 +1,133 @@
 <script lang="ts">
+	import Example from './Example.svelte';
 	import GitHub from './GitHub.svelte';
 	import { copy } from '$lib';
+	import CopyTextExample from './CopyTextExample.svelte';
 
 	const { data } = $props();
-
-	let text = $state('Hello World');
-
-	function error(event: CustomEvent<Error>) {
-		alert(event.detail.message);
-	}
 </script>
 
 <section class="title">
-	<h1>Svelte Copy Demo</h1>
+	<h1>Svelte Copy</h1>
 
 	<a href="https://github.com/ghostdevv/svelte-copy">
 		<GitHub />
 	</a>
 </section>
 
-<section>
-	<label>
-		Text to copy:
-		<input
-			id="text"
-			type="text"
-			placeholder="Lorem ipsum..."
-			bind:value={text}
-		/>
-	</label>
+<section class="col">
+	<h2>Usage</h2>
+
+	<p>The simplest use is to just pass the text you want to copy</p>
+
+	<Example code={data.examples.simple}>
+		{#snippet children(text)}
+			<button class="secondary" use:copy={text}> Copy </button>
+		{/snippet}
+	</Example>
+
+	<p>We could pass this as an object</p>
+
+	<Example code={data.examples.simpleObject}>
+		{#snippet children(text)}
+			<button class="secondary" use:copy={{ text }}> Copy </button>
+		{/snippet}
+	</Example>
+
+	<p>Let's alert the user if the text was copied</p>
+
+	<Example code={data.examples.simpleCopyAlert}>
+		{#snippet children(text)}
+			<button
+				class="secondary"
+				use:copy={{
+					text,
+					onCopy() {
+						alert('Copied text!');
+					},
+				}}>
+				Copy
+			</button>
+		{/snippet}
+	</Example>
+
+	<p>We could tell the user what was copied</p>
+
+	<Example code={data.examples.copyAlert}>
+		{#snippet children(text)}
+			<button
+				class="secondary"
+				use:copy={{
+					text,
+					onCopy() {
+						alert(`Copied Text: "${text}"`);
+					},
+				}}>
+				Copy
+			</button>
+		{/snippet}
+	</Example>
+
+	<p>If there was an error, we can check for that too</p>
+
+	<Example code={data.examples.errorAlert}>
+		{#snippet children(text)}
+			<button
+				class="secondary"
+				use:copy={{
+					text,
+					onCopy() {
+						throw new Error("let's pretend it broke");
+					},
+					onError(error) {
+						alert(error.message);
+					},
+				}}>
+				Copy
+			</button>
+		{/snippet}
+	</Example>
+
+	<p>We can trigger the copy on custom events</p>
+
+	<Example code={data.examples.customEvents}>
+		{#snippet children(text)}
+			<button
+				class="secondary"
+				use:copy={{
+					text,
+					events: ['pointerover'],
+					onCopy({ text, event }) {
+						alert(
+							`The text "${text}" was copied because of the "${event.type}" event`,
+						);
+					},
+					onError(error) {
+						alert(error.message);
+					},
+				}}>
+				Copy
+			</button>
+		{/snippet}
+	</Example>
 </section>
 
-<hr />
+<section class="col">
+	<h2>Extra</h2>
 
-<section class="example">
-	<h2>Simple Example</h2>
+	<h3>copyText()</h3>
 
-	{@html data.examples.simple}
+	<p>
+		We expose the underlying <code>copyText</code> function. It uses the
+		<code>navigator.clipboard</code> API by default, with a fallback to the legacy
+		method.
+	</p>
 
-	<button class="secondary" use:copy={text} on:svelte-copy:error={error}>
-		Copy
-	</button>
-</section>
-
-<section class="example">
-	<h2>Copy events</h2>
-
-	{@html data.examples.copyEvents}
-
-	<button
-		class="secondary"
-		use:copy={text}
-		on:svelte-copy={(e) => alert(e.detail)}
-		on:svelte-copy:error={error}
-	>
-		Alert on copy & error
-	</button>
-</section>
-
-<section class="example">
-	<h2>Custom Triggers</h2>
-
-	{@html data.examples.customTriggers}
-
-	<p>By default svelte-copy only listens to the <code>click</code> event.</p>
-
-	<button
-		use:copy={{ text, events: ['pointerover'] }}
-		on:svelte-copy:error={error}
-	>
-		Copy on hover
-	</button>
+	<Example code={data.examples.copyText}>
+		{#snippet children(text)}
+			<CopyTextExample />
+		{/snippet}
+	</Example>
 </section>
 
 <style lang="scss">
@@ -81,34 +138,7 @@
 		width: 100%;
 	}
 
-	label input {
-		margin-top: 8px;
-	}
-
-	.example {
-		display: flex;
-		flex-direction: column;
-		align-items: start;
-		width: 100%;
-		gap: 22px 16px;
-	}
-
-	:global(pre) {
-		width: 100%;
-		padding: 22px;
-		border-radius: 16px;
-		display: block;
-
-		font-family: 'Comic Mono', monospace;
-		background-color: var(--background-secondary) !important;
-	}
-
-	:global(code:not(pre code)) {
-		background-color: var(--background-secondary);
-		color: var(--secondary);
-		border-radius: 8px;
-		font-weight: bold;
-		padding: 4px 8px;
-		white-space: pre;
+	p {
+		max-width: 70%;
 	}
 </style>
