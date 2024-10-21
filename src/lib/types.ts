@@ -3,6 +3,11 @@ export interface CopyCallbackParams {
 	 * The text that was copied to clipboard
 	 */
 	text: string;
+
+	/**
+	 * The event that triggered the copy
+	 */
+	event: Event;
 }
 
 export type CopyCallback = (params: CopyCallbackParams) => void;

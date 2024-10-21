@@ -34,13 +34,21 @@ function parseOptions(options: string | Options): Options {
 	return typeof options == 'string' ? { text: options } : options;
 }
 
-function addListeners(element: Element, cb: () => void, events = ['click']) {
+function addListeners(
+	element: Element,
+	cb: (event: Event) => void,
+	events = ['click'],
+) {
 	for (const event of events) {
 		element.addEventListener(event, cb, true);
 	}
 }
 
-function removeListeners(element: Element, cb: () => void, events = ['click']) {
+function removeListeners(
+	element: Element,
+	cb: (event: Event) => void,
+	events = ['click'],
+) {
 	for (const event of events) {
 		element.removeEventListener(event, cb, true);
 	}
@@ -67,12 +75,12 @@ export const copy: Action<Element, string | Options> = (
 ) => {
 	let options = parseOptions(initialOptions);
 
-	const handle = async () => {
+	const handle = async (event: Event) => {
 		const text = options.text;
 
 		try {
 			await copyText(text);
-			options.onCopy?.({ text });
+			options.onCopy?.({ text, event });
 		} catch (e) {
 			const error = new Error(
 				`svelte-copy error: ${e instanceof Error ? e.message : e}`,
