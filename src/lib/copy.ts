@@ -1,12 +1,13 @@
 import type { Action } from 'svelte/action';
+import type { Options } from './types';
 
 export async function copyText(text: string) {
 	if ('clipboard' in navigator) {
 		await navigator.clipboard.writeText(text);
 	} else {
-		/**
-		 * This is the fallback deprecated way of copying text to the clipboard. Only runs if it can't find the clipboard API.
-		 */
+		//? This is the fallback deprecated way of copying text to the clipboard.
+		//? Only runs if it can't find the clipboard API.
+
 		const element = document.createElement('input');
 
 		element.type = 'text';
@@ -29,70 +30,56 @@ export async function copyText(text: string) {
 	}
 }
 
-interface Parameters {
-	text: string;
-	events?: string | string[];
+function parseOptions(options: string | Options): Options {
+	return typeof options == 'string' ? { text: options } : options;
 }
 
-interface Attributes {
-	'on:svelte-copy': (event: CustomEvent<string>) => void;
-	'on:svelte-copy:error': (event: CustomEvent<Error>) => void;
-}
-
-export const copy: Action<HTMLElement, Parameters | string, Attributes> = (
-	element,
-	params,
-) => {
-	async function handle() {
-		if (text)
-			try {
-				await copyText(text);
-
-				element.dispatchEvent(
-					new CustomEvent('svelte-copy', { detail: text }),
-				);
-			} catch (e) {
-				element.dispatchEvent(
-					new CustomEvent('svelte-copy:error', { detail: e }),
-				);
-			}
+function addListeners(element: Element, cb: () => void, events = ['click']) {
+	for (const event of events) {
+		element.addEventListener(event, cb, true);
 	}
+}
 
-	let events =
-		typeof params == 'string' ? ['click'] : [params.events].flat(1);
-	let text = typeof params == 'string' ? params : params.text;
+function removeListeners(element: Element, cb: () => void, events = ['click']) {
+	for (const event of events) {
+		element.removeEventListener(event, cb, true);
+	}
+}
 
-	events.forEach((event) => {
-		element.addEventListener(event, handle, true);
-	});
+export const copy: Action<Element, string | Options> = (
+	element: Element,
+	initialOptions: string | Options,
+) => {
+	let options = parseOptions(initialOptions);
+
+	const handle = async () => {
+		const text = options.text;
+
+		try {
+			await copyText(text);
+			options.onCopy?.({ text });
+		} catch (e) {
+			const error = new Error(
+				`svelte-copy error: ${e instanceof Error ? e.message : e}`,
+				{ cause: e },
+			);
+
+			options.onError?.(error);
+		}
+	};
+
+	addListeners(element, handle, options.events);
 
 	return {
-		update: (newParams: Parameters | string) => {
-			const newEvents =
-				typeof newParams == 'string'
-					? ['click']
-					: [newParams.events].flat(1);
-			const newText =
-				typeof newParams == 'string' ? newParams : newParams.text;
+		update(newOptions: string | Options) {
+			removeListeners(element, handle, options.events);
 
-			const addedEvents = newEvents.filter((x) => !events.includes(x));
-			const removedEvents = events.filter((x) => !newEvents.includes(x));
+			options = parseOptions(newOptions);
 
-			addedEvents.forEach((event) => {
-				element.addEventListener(event, handle, true);
-			});
-
-			removedEvents.forEach((event) => {
-				element.removeEventListener(event, handle, true);
-			});
-
-			events = newEvents;
-			text = newText;
+			addListeners(element, handle, options.events);
 		},
-		destroy: () => {
-			events.forEach((event) => {
-				element.removeEventListener(event, handle, true);
-			});
+		destroy() {
+			removeListeners(element, handle, options.events);
 		},
 	};
 };
