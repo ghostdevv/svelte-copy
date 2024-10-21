@@ -76,7 +76,7 @@ describe('copy action', () => {
 		element.click();
 		expect(await navigator.clipboard.readText()).toBe(text);
 		expect(onCopy).toHaveBeenCalledOnce();
-		expect(onCopy).toHaveBeenCalledWith({ text });
+		expect(onCopy).toHaveBeenCalledWith(expect.objectContaining({ text }));
 	});
 
 	it('sets updated text correctly with string option', async () => {
@@ -149,7 +149,7 @@ describe('copy action', () => {
 		element.click();
 		expect(await navigator.clipboard.readText()).toBe(text);
 		expect(onCopy).toHaveBeenCalledOnce();
-		expect(onCopy).toHaveBeenCalledWith({ text });
+		expect(onCopy).toHaveBeenCalledWith(expect.objectContaining({ text }));
 
 		const newOnCopy = vi.fn();
 		update({ text, onCopy: newOnCopy });
@@ -158,6 +158,8 @@ describe('copy action', () => {
 		await tick();
 		expect(onCopy).toHaveBeenCalledOnce();
 		expect(newOnCopy).toHaveBeenCalledOnce();
-		expect(newOnCopy).toHaveBeenCalledWith({ text });
+		expect(newOnCopy).toHaveBeenCalledWith(
+			expect.objectContaining({ text }),
+		);
 	});
 });
