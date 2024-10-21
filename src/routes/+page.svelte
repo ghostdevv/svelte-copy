@@ -1,8 +1,8 @@
 <script lang="ts">
+	import CopyTextExample from './CopyTextExample.svelte';
 	import Example from './Example.svelte';
 	import GitHub from './GitHub.svelte';
 	import { copy } from '$lib';
-	import CopyTextExample from './CopyTextExample.svelte';
 
 	const { data } = $props();
 </script>
