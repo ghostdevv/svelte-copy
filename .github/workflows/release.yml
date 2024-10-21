@@ -7,6 +7,8 @@ on:
 jobs:
     publish-npm:
         runs-on: ubuntu-latest
+        permissions:
+            id-token: write
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -34,3 +36,4 @@ jobs:
                   pnpm publish --no-git-checks
               env:
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+                  NPM_CONFIG_PROVENANCE: true
