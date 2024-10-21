@@ -82,10 +82,9 @@ export const copy: Action<Element, string | Options> = (
 			await copyText(text);
 			options.onCopy?.({ text, event });
 		} catch (e) {
-			const error = new Error(
-				`svelte-copy error: ${e instanceof Error ? e.message : e}`,
-				{ cause: e },
-			);
+			const error = new Error(`${e instanceof Error ? e.message : e}`, {
+				cause: e,
+			});
 
 			options.onError?.(error);
 		}
