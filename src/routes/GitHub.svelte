@@ -1,13 +1,7 @@
-<svelte:options namespace="svg" />
-
-<script lang="ts">
-	export let size = 16;
-</script>
-
 <svg
 	xmlns="http://www.w3.org/2000/svg"
-	width="{size}px"
-	height="{size}px"
+	width="28px"
+	height="28px"
 	viewBox="0 0 16 16"
 >
 	<path

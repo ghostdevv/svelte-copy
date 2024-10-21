@@ -2,9 +2,9 @@
 	import GitHub from './GitHub.svelte';
 	import { copy } from '$lib';
 
-	export let data;
+	const { data } = $props();
 
-	let text = 'Hello World';
+	let text = $state('Hello World');
 
 	function error(event: CustomEvent<Error>) {
 		alert(event.detail.message);
@@ -15,7 +15,7 @@
 	<h1>Svelte Copy Demo</h1>
 
 	<a href="https://github.com/ghostdevv/svelte-copy">
-		<GitHub size={28} />
+		<GitHub />
 	</a>
 </section>
 
