@@ -1,57 +1,57 @@
 {
-  "name": "svelte-copy",
-  "version": "1.4.2",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ghostdevv/svelte-copy.git"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ghostdevv/svelte-copy/issues"
-  },
-  "author": "Willow GHOST <ghostdevbusiness@gmail.com> (https://ghostdev.xyz)",
-  "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
-    "package": "svelte-kit sync && svelte-package && publint",
-    "test": "vitest"
-  },
-  "devDependencies": {
-    "@sveltejs/adapter-static": "^3.0.5",
-    "@sveltejs/kit": "2.7.2",
-    "@sveltejs/package": "^2.3.5",
-    "@sveltejs/vite-plugin-svelte": "^4.0.0",
-    "dedent": "^1.5.3",
-    "ghostsui": "^1.6.0",
-    "happy-dom": "^15.7.4",
-    "prettier": "^3.3.3",
-    "prettier-plugin-svelte": "^3.2.7",
-    "publint": "^0.2.11",
-    "sass": "^1.80.3",
-    "shiki": "^1.22.0",
-    "svelte": "^5.0.2",
-    "svelte2tsx": "^0.7.22",
-    "tslib": "^2.8.0",
-    "typescript": "^5.6.3",
-    "vite": "^5.4.9",
-    "vitest": "^2.1.3"
-  },
-  "peerDependencies": {
-    "svelte": "^3.55.0 || ^4.0.0"
-  },
-  "type": "module",
-  "types": "./dist/index.d.ts",
-  "svelte": "./dist/index.js",
-  "sideEffects": false,
-  "exports": {
-    "./package.json": "./package.json",
-    ".": {
-      "types": "./dist/index.d.ts",
-      "svelte": "./dist/index.js",
-      "default": "./dist/index.js"
-    }
-  },
-  "files": [
-    "dist"
-  ]
+	"name": "svelte-copy",
+	"version": "1.4.2",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ghostdevv/svelte-copy.git"
+	},
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/ghostdevv/svelte-copy/issues"
+	},
+	"author": "Willow GHOST <ghostdevbusiness@gmail.com> (https://ghostdev.xyz)",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"package": "svelte-kit sync && svelte-package && publint",
+		"test": "vitest"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-static": "^3.0.5",
+		"@sveltejs/kit": "2.7.2",
+		"@sveltejs/package": "^2.3.5",
+		"@sveltejs/vite-plugin-svelte": "^4.0.0",
+		"dedent": "^1.5.3",
+		"ghostsui": "^1.6.0",
+		"happy-dom": "^15.7.4",
+		"prettier": "^3.3.3",
+		"prettier-plugin-svelte": "^3.2.7",
+		"publint": "^0.2.11",
+		"sass": "^1.80.3",
+		"shiki": "^1.22.0",
+		"svelte": "^5.0.2",
+		"svelte2tsx": "^0.7.22",
+		"tslib": "^2.8.0",
+		"typescript": "^5.6.3",
+		"vite": "^5.4.9",
+		"vitest": "^2.1.3"
+	},
+	"peerDependencies": {
+		"svelte": "^3.55.0 || ^4.0.0"
+	},
+	"type": "module",
+	"types": "./dist/index.d.ts",
+	"svelte": "./dist/index.js",
+	"sideEffects": false,
+	"exports": {
+		"./package.json": "./package.json",
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js",
+			"default": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist"
+	]
 }
