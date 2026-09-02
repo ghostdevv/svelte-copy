@@ -1,4 +1,4 @@
-export { copy, copyText } from './copy';
+export { copy, copyAction, copyText } from './copy';
 export type {
 	Options,
 	ErrorCallback,
