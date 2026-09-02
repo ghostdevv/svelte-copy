@@ -2,7 +2,7 @@
 	import CopyTextExample from './CopyTextExample.svelte';
 	import Example from './Example.svelte';
 	import GitHub from './GitHub.svelte';
-	import { copy } from '$lib';
+	import { copy, copyAction } from '$lib';
 
 	const { data } = $props();
 </script>
@@ -20,27 +20,128 @@
 
 	<p>The simplest use is to just pass the text you want to copy</p>
 
-	<Example code={data.examples.simple}>
+	<Example code={data.examples.attachment.simple}>
 		{#snippet children(text)}
-			<button class="secondary" use:copy={text}> Copy </button>
+			<button class="secondary" {@attach copy(text)}> Copy </button>
 		{/snippet}
 	</Example>
 
 	<p>We could pass this as an object</p>
 
-	<Example code={data.examples.simpleObject}>
+	<Example code={data.examples.attachment.simpleObject}>
 		{#snippet children(text)}
-			<button class="secondary" use:copy={{ text }}> Copy </button>
+			<button class="secondary" {@attach copy({text})}> Copy </button>
 		{/snippet}
 	</Example>
 
 	<p>Let's alert the user if the text was copied</p>
 
-	<Example code={data.examples.simpleCopyAlert}>
+	<Example code={data.examples.attachment.simpleCopyAlert}>
 		{#snippet children(text)}
 			<button
 				class="secondary"
-				use:copy={{
+				{@attach copy({
+					text,
+					onCopy() {
+						alert('Copied text!');
+					},
+				})}>
+				Copy
+			</button>
+		{/snippet}
+	</Example>
+
+	<p>We could tell the user what was copied</p>
+
+	<Example code={data.examples.attachment.copyAlert}>
+		{#snippet children(text)}
+			<button
+				class="secondary"
+				{@attach copy({
+					text,
+					onCopy() {
+						alert(`Copied Text: "${text}"`);
+					},
+				})}>
+				Copy
+			</button>
+		{/snippet}
+	</Example>
+
+	<p>If there was an error, we can check for that too</p>
+
+	<Example code={data.examples.attachment.errorAlert}>
+		{#snippet children(text)}
+			<button
+				class="secondary"
+				{@attach copy({
+					text,
+					onCopy() {
+						throw new Error("let's pretend it broke");
+					},
+					onError({ error }) {
+						alert(error.message);
+					},
+				})}>
+				Copy
+			</button>
+		{/snippet}
+	</Example>
+
+	<p>We can trigger the copy on custom events</p>
+
+	<Example code={data.examples.attachment.customEvents}>
+		{#snippet children(text)}
+			<button
+				class="secondary"
+				{@attach copy({
+					text,
+					events: ['pointerover'],
+					onCopy({ text, event }) {
+						alert(
+							`The text "${text}" was copied because of the "${event.type}" event`,
+						);
+					},
+					onError({ error }) {
+						alert(error.message);
+					},
+				})}>
+				Copy
+			</button>
+		{/snippet}
+	</Example>
+</section>
+
+<section class="col">
+	<h2>Usage (with actions)</h2>
+
+	<a href="https://svelte.dev/docs/svelte/use" class="warning">
+		In Svelte 5.29 and newer, consider using attachments instead, as they are more flexible and composable.
+	</a>
+
+	<p>The simplest use is to just pass the text you want to copy</p>
+
+	<Example code={data.examples.action.simple}>
+		{#snippet children(text)}
+			<button class="secondary" use:copyAction={text}> Copy </button>
+		{/snippet}
+	</Example>
+
+	<p>We could pass this as an object</p>
+
+	<Example code={data.examples.action.simpleObject}>
+		{#snippet children(text)}
+			<button class="secondary" use:copyAction={{ text }}> Copy </button>
+		{/snippet}
+	</Example>
+
+	<p>Let's alert the user if the text was copied</p>
+
+	<Example code={data.examples.action.simpleCopyAlert}>
+		{#snippet children(text)}
+			<button
+				class="secondary"
+				use:copyAction={{
 					text,
 					onCopy() {
 						alert('Copied text!');
@@ -53,11 +154,11 @@
 
 	<p>We could tell the user what was copied</p>
 
-	<Example code={data.examples.copyAlert}>
+	<Example code={data.examples.action.copyAlert}>
 		{#snippet children(text)}
 			<button
 				class="secondary"
-				use:copy={{
+				use:copyAction={{
 					text,
 					onCopy() {
 						alert(`Copied Text: "${text}"`);
@@ -70,11 +171,11 @@
 
 	<p>If there was an error, we can check for that too</p>
 
-	<Example code={data.examples.errorAlert}>
+	<Example code={data.examples.action.errorAlert}>
 		{#snippet children(text)}
 			<button
 				class="secondary"
-				use:copy={{
+				use:copyAction={{
 					text,
 					onCopy() {
 						throw new Error("let's pretend it broke");
@@ -90,11 +191,11 @@
 
 	<p>We can trigger the copy on custom events</p>
 
-	<Example code={data.examples.customEvents}>
+	<Example code={data.examples.action.customEvents}>
 		{#snippet children(text)}
 			<button
 				class="secondary"
-				use:copy={{
+				use:copyAction={{
 					text,
 					events: ['pointerover'],
 					onCopy({ text, event }) {
@@ -140,5 +241,11 @@
 
 	p {
 		max-width: 70%;
+	}
+
+	.warning {
+		color: #b71c1c;
+		font-weight: bold;
+		text-decoration: underline;
 	}
 </style>

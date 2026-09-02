@@ -1,5 +1,6 @@
 import type { Action } from 'svelte/action';
 import type { Options } from './types';
+import { fromAction } from 'svelte/attachments';
 
 export async function copyText(text: string) {
 	if ('clipboard' in navigator) {
@@ -62,14 +63,14 @@ function removeListeners(
  * @example
  *
  * <script>
- *     import { copy } from 'svelte-copy';
+ *     import { copyAction } from 'svelte-copy';
  * </script>
  *
- * <button use:copy={'Hello World'}>
+ * <button use:copyAction={'Hello World'}>
  *     Click me!
  * </button>
  */
-export const copy: Action<Element, string | Options> = (
+export const copyAction: Action<Element, string | Options> = (
 	element: Element,
 	initialOptions: string | Options,
 ) => {
@@ -105,3 +106,21 @@ export const copy: Action<Element, string | Options> = (
 		},
 	};
 };
+
+/**
+ * A svelte attachment to copy text to clipboard.
+ *
+ * @see https://svelte-copy.willow.codes
+ *
+ * @example
+ *
+ * <script>
+ *     import { copy } from 'svelte-copy';
+ * </script>
+ *
+ * <button {@attach copy('Hello World')}>
+ *     Click me!
+ * </button>
+ */
+export const copy = (options: string | Options) =>
+	fromAction(copyAction, () => options);
